@@ -34,7 +34,7 @@ namespace PP8_February
             InitializeComponent();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             string Sql = "select Название_группы from dbo.class";
-            SqlConnection conn = new SqlConnection("Data Source=DESKTOP-1KN5R8D;Initial Catalog=PP8;Integrated Security=True");
+            SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
             conn.Open();
             SqlCommand cmd = new SqlCommand(Sql, conn);
             SqlDataReader DR = cmd.ExecuteReader();
@@ -66,7 +66,7 @@ namespace PP8_February
             List<string> times = new List<string> { "1", "2", "3", "4", "5", "6" };
 
             string Sql = "select Name_discipline from dbo.Discipline";
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-1KN5R8D;Initial Catalog=PP8;Integrated Security=True");
+            SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
             connection.Open();
             SqlCommand command = new SqlCommand(Sql, connection);
             SqlDataReader reader = command.ExecuteReader();
@@ -79,7 +79,7 @@ namespace PP8_February
             connection.Close();
 
             string Sql1 = "select Название_группы from dbo.class";
-            SqlConnection connection1 = new SqlConnection("Data Source=DESKTOP-1KN5R8D;Initial Catalog=PP8;Integrated Security=True");
+            SqlConnection connection1 = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
             connection1.Open();
             SqlCommand command1 = new SqlCommand(Sql1, connection1);
             SqlDataReader reader1 = command1.ExecuteReader();
@@ -95,7 +95,7 @@ namespace PP8_February
             // List<string> classes = new List<string> { "П50-4-19", "1B", "2A", "2B", "3A", "3B" };
 
             // Получение количества записей в таблице расписания
-            SqlConnection conngroup = new SqlConnection("Data Source=DESKTOP-1KN5R8D;Initial Catalog=PP8;Integrated Security=True");
+            SqlConnection conngroup = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
             conngroup.Open();
             SqlCommand commgroup = new SqlCommand("SELECT COUNT(*) FROM class", conngroup);
             int countgroup = (int)commgroup.ExecuteScalar();
@@ -111,9 +111,9 @@ namespace PP8_February
             Random random = new Random();
             //for (int shetgroup = 0; shetgroup < countgroup; shetgroup++)
             //{
-                foreach (string className in classes)
-                {
-                    List<Lesson> classSchedule = new List<Lesson>();
+            foreach (string className in classes)
+            {
+                List<Lesson> classSchedule = new List<Lesson>();
                     for (int i = 0; i < 3; i++)
                     {
                         number1++;
@@ -233,11 +233,9 @@ namespace PP8_February
         private void FillDataGrid(Dictionary<string, List<Lesson>> schedule)
         {
             // Выбор класса для отображения
-            //string selectedClass = group.SelectedValue.ToString();
-
-            data.ItemsSource = schedule;
+            string selectedClass = group.SelectedValue.ToString();
+            data.ItemsSource = schedule[selectedClass];
         }
-
 
         //public static DataTable DataViewAsDataTable(DataView dv)
         //{
