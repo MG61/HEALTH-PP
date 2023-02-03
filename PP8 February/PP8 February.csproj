@@ -258,6 +258,9 @@
     <Compile Include="Class.xaml.cs">
       <DependentUpon>Class.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Discipline.xaml.cs">
+      <DependentUpon>Discipline.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuAdmin.xaml.cs">
       <DependentUpon>MenuAdmin.xaml</DependentUpon>
     </Compile>
@@ -269,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Class.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Discipline.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

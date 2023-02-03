@@ -25,11 +25,13 @@ namespace PP8_February
     {
 
         DataSet1 dataSet = new DataSet1();
-
+        AdminTableAdapter ATA = new AdminTableAdapter();
+        
 
         public MainWindow()
         {
             InitializeComponent();
+            ATA.Fill(dataSet.Admin);
         }
 
         private void Voyti_Click(object sender, RoutedEventArgs e)
@@ -39,6 +41,7 @@ namespace PP8_February
             AdminAuth(log, pass);
         }
 
+        int prov = 0;
         private void AdminAuth(string adminlog, string adminpass)
         {
             try
@@ -47,20 +50,19 @@ namespace PP8_February
                 {
                     if (adminlog == dataSet.Admin.Rows[i][1].ToString() && adminpass == dataSet.Admin.Rows[i][2].ToString())
                     {
+                        prov = 1;
                         MenuAdmin adm = new MenuAdmin();
                         adm.Show();
                         this.Close();
                     }
-                    else
+                }
+                    if(prov == 0)
                     {
                         MessageBox.Show("Введите данные!");
                     }
-                }
             }
-            catch
-            {
-                MessageBox.Show("Введите данные!");
-            }
+            catch { }
+            prov = 0;
         }
 
         private void log_PreviewTextInput(object sender, TextCompositionEventArgs e)

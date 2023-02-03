@@ -25,11 +25,11 @@
                 <!--Градиент-->
             </Border.Background>
         </Border>
-        <DataGrid x:Name="data" FontWeight="Bold" FontSize="15" VerticalContentAlignment="Center" Margin="432,10,9.6,10"  BorderBrush="Black" BorderThickness="2" />
+        <DataGrid x:Name="data" FontWeight="Bold" FontSize="15" VerticalContentAlignment="Center" Margin="432,10,9.6,10"  BorderBrush="Black" BorderThickness="2" AutoGenerateColumns="True" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn"/>
         <Button Content="Добавить" HorizontalAlignment="Left" Margin="35,531,0,0" VerticalAlignment="Top" Width="160" Click="DOB_group" Height="38" FontFamily="Britannic Bold"/>
         <Button Content="Изменить" HorizontalAlignment="Left" Margin="35,584,0,0" VerticalAlignment="Top" Width="160" Click="UPDATE_group" Height="38" FontFamily="Britannic Bold"/>
         <Button Content="Удалить" HorizontalAlignment="Left" Margin="237,531,0,0" VerticalAlignment="Top" Width="160" Click="DELETE_group" Height="38" FontFamily="Britannic Bold"/>
         <Button Content="Выход"  Margin="237,584,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
-        <TextBox Name="Classtext" HorizontalAlignment="Left" Height="38" Margin="35,33,0,0" TextWrapping="Wrap" Text="Группа" VerticalAlignment="Top" Width="362" TextAlignment="Center" Background="White" BorderBrush="White" Foreground="#557c93" FontSize="15" FontFamily="Britannic Bold"/>
+        <TextBox Name="Classtext" HorizontalAlignment="Left" Height="38" Margin="35,33,0,0" TextWrapping="Wrap" Text="Группа" VerticalAlignment="Top" Width="362" TextAlignment="Center" Background="White" BorderBrush="White" Foreground="#557c93" FontSize="15" FontFamily="Britannic Bold " GotFocus="got1"/>
     </Grid>
 </Window>

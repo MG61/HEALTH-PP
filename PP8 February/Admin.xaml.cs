@@ -55,7 +55,7 @@ namespace PP8_February
                 if (data.SelectedItem != null)
                 {
                     DataRowView preobraz = (DataRowView)data.SelectedItem;
-                    int id = (int)preobraz["Номер пользователя"];
+                    int id = (int)preobraz["Номер_пользователя"];
                     ATA.UpdateQuery(log.Text, pass.Text, id);
                     ATA.Fill(dataSet.Admin);
                 }
@@ -73,7 +73,7 @@ namespace PP8_February
                 if (data.SelectedItem != null)
                 {
                     DataRowView preobraz = (DataRowView)data.SelectedItem;
-                    int id = (int)preobraz["Номер пользователя"];
+                    int id = (int)preobraz["Номер_пользователя"];
                     ATA.DeleteQuery(id);
                     ATA.Fill(dataSet.Admin);
                 }
@@ -121,6 +121,13 @@ namespace PP8_February
             e.Handled = "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM".IndexOf(e.Text) < 0;
         }
 
-
+        //Убирает первый столбец datagrid
+        private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyName == "Номер_пользователя")
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

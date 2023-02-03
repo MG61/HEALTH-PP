@@ -17,27 +17,27 @@ using System.Windows.Shapes;
 namespace PP8_February
 {
     /// <summary>
-    /// Логика взаимодействия для Class.xaml
+    /// Логика взаимодействия для Discipline.xaml
     /// </summary>
-    public partial class Class : Window
+    public partial class Discipline : Window
     {
         DataSet1 dataSet = new DataSet1();
-        Class1TableAdapter CTA = new Class1TableAdapter();
+        DisciplineTableAdapter DTA = new DisciplineTableAdapter();
 
-        public Class()
+        public Discipline()
         {
             InitializeComponent();
 
-            data.ItemsSource = dataSet.Class1.DefaultView;
-            CTA.Fill(dataSet.Class1);
+            data.ItemsSource = dataSet.Discipline.DefaultView;
+            DTA.Fill(dataSet.Discipline);
         }
 
         private void DOB_group(object sender, RoutedEventArgs e)
         {
             try
             {
-                CTA.InsertQuery(Classtext.Text);
-                CTA.Fill(dataSet.Class1);
+                DTA.InsertQuery(Disciplinetext.Text);
+                DTA.Fill(dataSet.Discipline);
             }
             catch
             {
@@ -52,9 +52,9 @@ namespace PP8_February
                 if (data.SelectedItem != null)
                 {
                     DataRowView preobraz = (DataRowView)data.SelectedItem;
-                    int id = (int)preobraz["ID_class"];
-                    CTA.UpdateQuery(Classtext.Text, id);
-                    CTA.Fill(dataSet.Class1);
+                    int id = (int)preobraz["ID_discipline"];
+                    DTA.UpdateQuery(Disciplinetext.Text, id);
+                    DTA.Fill(dataSet.Discipline);
                 }
             }
             catch
@@ -70,9 +70,9 @@ namespace PP8_February
                 if (data.SelectedItem != null)
                 {
                     DataRowView preobraz = (DataRowView)data.SelectedItem;
-                    int id = (int)preobraz["ID_class"];
-                    CTA.DeleteQuery(id);
-                    CTA.Fill(dataSet.Class1);
+                    int id = (int)preobraz["ID_discipline"];
+                    DTA.DeleteQuery(id);
+                    DTA.Fill(dataSet.Discipline);
                 }
             }
             catch
@@ -90,18 +90,17 @@ namespace PP8_February
 
         private void got1(object sender, RoutedEventArgs e)
         {
-            if (Classtext.Text == "Группа")
-                Classtext.Clear();
+            if (Disciplinetext.Text == "Дисциплина")
+                Disciplinetext.Clear();
         }
 
         //Убирает первый столбец datagrid
         private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (e.PropertyName == "ID_class")
+            if (e.PropertyName == "ID_discipline")
             {
                 e.Cancel = true;
             }
         }
     }
 }
-

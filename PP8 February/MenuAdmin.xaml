@@ -25,9 +25,10 @@
                 <!--Градиент-->
             </Border.Background>
         </Border>
-        <Button Content="Пользователи" HorizontalAlignment="Left" Margin="159,118,0,0" VerticalAlignment="Top" Click="Employee" Height="180" Width="311" FontFamily="Britannic Bold" FontSize="30"/>
-        <Button Content="Расписание" HorizontalAlignment="Left" Margin="668,118,0,0" VerticalAlignment="Top"  Click="Schedule" Height="180" Width="310" FontFamily="Britannic Bold" FontSize="30"/>
-        <Button Content="Группы" HorizontalAlignment="Left" Margin="159,358,0,0" VerticalAlignment="Top"  Click="Group" Height="180" Width="311" FontFamily="Britannic Bold" FontSize="30"/>
-        <Button Content="Выход"  Margin="667,358,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="180" Width="311" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold" FontSize="30"/>
+        <Button Content="Пользователи" HorizontalAlignment="Left" Margin="249,61,0,0" VerticalAlignment="Top" Click="Employee" Height="145" Width="245" FontFamily="Britannic Bold" FontSize="30"/>
+        <Button Content="Расписание" HorizontalAlignment="Left" Margin="646,61,0,0" VerticalAlignment="Top"  Click="Schedule" Height="145" Width="245" FontFamily="Britannic Bold" FontSize="30"/>
+        <Button Content="Группы" HorizontalAlignment="Left" Margin="249,0,0,0" VerticalAlignment="Center"  Click="Group" Height="145" Width="245" FontFamily="Britannic Bold" FontSize="30"/>
+        <Button Content="Дисциплины" HorizontalAlignment="Left" Margin="646,0,0,0" VerticalAlignment="Center"  Click="discipline" Height="146" Width="245" FontFamily="Britannic Bold" FontSize="30"/>
+        <Button Content="Выход"  Margin="452,455,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="145" Width="245" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold" FontSize="30"/>
     </Grid>
 </Window>

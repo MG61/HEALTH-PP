@@ -21,6 +21,12 @@ using OfficeOpenXml;
 using System.IO;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 using System.Data.Entity;
+using static PP8_February.DataSet1;
+using MessageBox = System.Windows.MessageBox;
+using Microsoft.Office.Interop.Excel;
+using DataTable = System.Data.DataTable;
+using Window = System.Windows.Window;
+using System.Runtime.ConstrainedExecution;
 
 namespace PP8_February
 {
@@ -39,19 +45,43 @@ namespace PP8_February
             data.ItemsSource = dataSet1.Schedule.DefaultView;
             STA.Fill(dataSet1.Schedule);
         }
-        
-        //// Класс с данными расписания
-        //public class Lesson
-        //{
-        //    public string День_недели { get; set; }
-        //    public string Номер { get; set; }
-        //    public string Группа { get; set; }
-        //    public string Дисциплина { get; set; }
 
-        //}
+        public static DataTable DataViewAsDataTable(DataView dv)
+        {
+            DataTable dt = dv.Table.Clone();
+            foreach (DataRowView drv in dv)
+                dt.ImportRow(drv.Row);
+            return dt;
+        }
 
         private void export(object sender, RoutedEventArgs e)
         {
+            Excel.Application excel = null;
+            Excel.Workbook wb = null;
+
+            object missing = Type.Missing;
+            Excel.Worksheet ws = null;
+            Excel.Range rng = null;
+
+            excel = new Microsoft.Office.Interop.Excel.Application();
+            wb = excel.Workbooks.Add();
+            ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.ActiveSheet;
+
+            DataView view = (DataView)data.ItemsSource;
+            DataTable dt = DataViewAsDataTable(view);
+
+            for (int Idx = 0; Idx < dt.Columns.Count; Idx++)
+            {
+                ws.Range["A1"].Offset[0, Idx].Value = dt.Columns[Idx].ColumnName;
+            }
+
+            for (int Idx = 0; Idx < dt.Rows.Count; Idx++)
+            {
+                ws.Range["A2"].Offset[Idx].Resize[1, dt.Columns.Count].Value = dt.Rows[Idx].ItemArray;
+            }
+
+            excel.Visible = true;
+            wb.Activate();
         }
 
         private void EXIT_2(object sender, RoutedEventArgs e)
@@ -66,7 +96,7 @@ namespace PP8_February
 
             List<string> День_неделиs = new List<string> { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" };
             List<string> times = new List<string> { "1", "2", "3", "4", "5", "6" };
-            string Sql = "select Name_discipline from dbo.Discipline";
+            string Sql = "select Дисциплина from dbo.Discipline";
             SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
             connection.Open();
             SqlCommand command = new SqlCommand(Sql, connection);
@@ -74,7 +104,7 @@ namespace PP8_February
             List<string> subjects = new List<string>();
             while (reader.Read())
             {
-                subjects.Add(reader["Name_discipline"].ToString());
+                subjects.Add(reader["Дисциплина"].ToString());
             }
             reader.Close();
             connection.Close();
@@ -100,6 +130,12 @@ namespace PP8_February
             int countgroup = (int)commgroup.ExecuteScalar();
             conngroup.Close();
 
+            SqlConnection connsubject = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
+            connsubject.Open();
+            SqlCommand commsubject = new SqlCommand("SELECT COUNT(*) FROM Discipline", connsubject);
+            int countsubject = (int)commsubject.ExecuteScalar();
+            connsubject.Close();
+
             // Генерация случайного расписания для каждого класса
             int number1 = 0;
             int number2 = 0;
@@ -110,45 +146,150 @@ namespace PP8_February
 
             int intforchicl = 0;
             string groupforchicl;
+            int intsubjects = 0;
+            string subject;
+            int chet = 0;
             Random random = new Random();
 
             for (int shetgroup = 0; shetgroup < countgroup; shetgroup++)
             {
                 groupforchicl = classes[intforchicl];
+                
                 for (int i = 0; i < 3; i++)
                 {
                     number1++;
-                    STA.InsertQuery("Понедельник", number1.ToString(), groupforchicl, subjects[random.Next(subjects.Count)]);
+                    for (int l = 0;l < dataSet1.Schedule.Rows.Count; l++)
+                    {
+                        if ("Понедельник" == dataSet1.Schedule.Rows[l][1].ToString() && number1.ToString() == dataSet1.Schedule.Rows[l][2].ToString() && subjects[intsubjects] == dataSet1.Schedule.Rows[l][4].ToString())
+                        {
+                            chet=1;
+                            Console.WriteLine(chet);
+                        }
+                    }
+                    if (chet > 0)
+                    {
+                        intsubjects++;
+                        Console.WriteLine(chet);
+                        Console.WriteLine("intsubjects:" + intsubjects);
+                        if (intsubjects == countsubject)
+                        {
+                            intsubjects = 0;
+                        }
+                        chet = 0;
+                    }
+                    for (int е = 0; е < dataSet1.Schedule.Rows.Count; е++)
+                    {
+                        if ("Понедельник" == dataSet1.Schedule.Rows[е][1].ToString() && number1.ToString() == dataSet1.Schedule.Rows[е][2].ToString() && subjects[intsubjects] == dataSet1.Schedule.Rows[е][4].ToString())
+                        {
+                            Console.WriteLine("Есть");
+                        }
+                    }
+                    STA.InsertQuery("Понедельник", number1.ToString(), groupforchicl, subjects[intsubjects]);
+                    intsubjects++;
+                    if (intsubjects == countsubject)
+                    {
+                        intsubjects = 0;
+                    }
                 }
                 STA.InsertQuery(null, null, null, null);
                 for (int i = 0; i < 3; i++)
                 {
+                    subject = subjects[intsubjects];
+                    for (int l = 0; l < dataSet1.Schedule.Rows.Count; l++)
+                    {
+                        if ("Вторник" == dataSet1.Schedule.Rows[l][1].ToString() && number2.ToString() == dataSet1.Schedule.Rows[l][2].ToString() && subject == dataSet1.Schedule.Rows[l][4].ToString())
+                        {
+                            //intsubjects++;
+                        }
+                    }
+                    subject = subjects[intsubjects];
                     number2++;
-                    STA.InsertQuery("Вторник", number2.ToString(), groupforchicl, subjects[random.Next(subjects.Count)]);
+                    STA.InsertQuery("Вторник", number2.ToString(), groupforchicl, subject);
+                    intsubjects++;
+                    if (intsubjects == countsubject)
+                    {
+                        intsubjects = 0;
+                    }
                 }
                 STA.InsertQuery(null, null, null, null);
                 for (int i = 0; i < 3; i++)
                 {
+                    subject = subjects[intsubjects];
+                    for (int l = 0; l < dataSet1.Schedule.Rows.Count; l++)
+                    {
+                        if ("Среда" == dataSet1.Schedule.Rows[l][1].ToString() && number3.ToString() == dataSet1.Schedule.Rows[l][2].ToString() && subject == dataSet1.Schedule.Rows[l][4].ToString())
+                        {
+                            //intsubjects++;
+                        }
+                    }
+                    subject = subjects[intsubjects];
                     number3++;
-                    STA.InsertQuery("Среда", number3.ToString(), groupforchicl, subjects[random.Next(subjects.Count)]);
+                    STA.InsertQuery("Среда", number3.ToString(), groupforchicl, subject);
+                    intsubjects++;
+                    if (intsubjects == countsubject)
+                    {
+                        intsubjects = 0;
+                    }
                 }
                 STA.InsertQuery(null, null, null, null);
                 for (int i = 0; i < 3; i++)
                 {
+                    subject = subjects[intsubjects];
+                    for (int l = 0; l < dataSet1.Schedule.Rows.Count; l++)
+                    {
+                        if ("Четверг" == dataSet1.Schedule.Rows[l][1].ToString() && number4.ToString() == dataSet1.Schedule.Rows[l][2].ToString() && subject == dataSet1.Schedule.Rows[l][4].ToString())
+                        {
+                            //intsubjects++;
+                        }
+                    }
+                    subject = subjects[intsubjects];
                     number4++;
-                    STA.InsertQuery("Четверг", number4.ToString(), groupforchicl, subjects[random.Next(subjects.Count)]);
+                    STA.InsertQuery("Четверг", number4.ToString(), groupforchicl, subject);
+                    intsubjects++;
+                    if (intsubjects == countsubject)
+                    {
+                        intsubjects = 0;
+                    }
                 }
                 STA.InsertQuery(null, null, null, null);
                 for (int i = 0; i < 3; i++)
                 {
+                    subject = subjects[intsubjects];
+                    for (int l = 0; l < dataSet1.Schedule.Rows.Count; l++)
+                    {
+                        if ("Пятница" == dataSet1.Schedule.Rows[l][1].ToString() && number5.ToString() == dataSet1.Schedule.Rows[l][2].ToString() && subject == dataSet1.Schedule.Rows[l][4].ToString())
+                        {
+                            //intsubjects++;
+                        }
+                    }
+                    subject = subjects[intsubjects];
                     number5++;
-                    STA.InsertQuery("Пятница", number5.ToString(), groupforchicl, subjects[random.Next(subjects.Count)]);
+                    STA.InsertQuery("Пятница", number5.ToString(), groupforchicl, subject);
+                    intsubjects++;
+                    if (intsubjects == countsubject)
+                    {
+                        intsubjects = 0;
+                    }
                 }
                 STA.InsertQuery(null, null, null, null);
                 for (int i = 0; i < 3; i++)
                 {
+                    subject = subjects[intsubjects];
+                    for (int l = 0; l < dataSet1.Schedule.Rows.Count; l++)
+                    {
+                        if ("Суббота" == dataSet1.Schedule.Rows[l][1].ToString() && number6.ToString() == dataSet1.Schedule.Rows[l][2].ToString() && subject == dataSet1.Schedule.Rows[l][4].ToString())
+                        {
+                            //intsubjects++;
+                        }
+                    }
+                    subject = subjects[intsubjects];
                     number6++;
-                    STA.InsertQuery("Суббота", number6.ToString(), groupforchicl, subjects[random.Next(subjects.Count)]);
+                    STA.InsertQuery("Суббота", number6.ToString(), groupforchicl, subject);
+                    intsubjects++;
+                    if (intsubjects == countsubject)
+                    {
+                        intsubjects = 0;
+                    }
                 }
                 STA.InsertQuery(null, null, null, null);
                 STA.Fill(dataSet1.Schedule);
@@ -163,31 +304,6 @@ namespace PP8_February
            
             }
 
-
-
-
-        }
-        private void test(object sender, RoutedEventArgs e)
-        {
-            string Sql = "select Name_discipline from dbo.Schedule";
-            SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=PP8;Integrated Security=True");
-            connection.Open();
-            SqlCommand command = new SqlCommand(Sql, connection);
-            SqlDataReader reader = command.ExecuteReader();
-            List<string> sch = new List<string>();
-            while (reader.Read())
-            {
-                sch.Add(reader["Name_discipline"].ToString());
-            }
-            reader.Close();
-            connection.Close();
-            List<int> nums = new List<int>() { 1, 2, 3, 4, 5 };
-
-            //for (var i = 0; i < sch.Count; i++)
-            //{
-            //    if (sch[1] == )
-            //    Console.WriteLine(nums[i]);
-            //}
         }
 
         private void delete_table(object sender, RoutedEventArgs e)
@@ -200,5 +316,15 @@ namespace PP8_February
             conn.Close();
             STA.Fill(dataSet1.Schedule);
         }
+
+        //Убирает первый столбец datagrid
+        private void DataGrid_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyName == "ID_schedule")
+            {
+                e.Cancel = true;
+            }
+        }   
     }
+
 }

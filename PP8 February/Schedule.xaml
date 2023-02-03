@@ -29,7 +29,9 @@
             </Border.Background>
 
         </Border>
-        <DataGrid x:Name="data" FontWeight="Bold" FontSize="15" VerticalContentAlignment="Center" Margin="110,44,110,168" BorderThickness="2"/>
+        <DataGrid x:Name="data" FontWeight="Bold" FontSize="15" VerticalContentAlignment="Center" Margin="110,44,110,168" BorderThickness="2" RowHeaderWidth="0" AutoGenerateColumns="True" AutoGeneratingColumn="DataGrid_OnAutoGeneratingColumn">
+
+        </DataGrid>
         <Button Content="Выход"  Margin="367,584,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
         <Button Content="Экспорт"  Margin="367,525,0,0"   Click="export" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
         <Button Content="Сгенерировать расписание"  Margin="575,525,0,0"   Click="dob_table" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>

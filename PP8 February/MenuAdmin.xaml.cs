@@ -51,5 +51,12 @@ namespace PP8_February
             go.Show();
             this.Close();
         }
+
+        private void discipline(object sender, RoutedEventArgs e)
+        {
+            Discipline go = new Discipline();
+            go.Show();
+            this.Close();
+        }
     }
 }
