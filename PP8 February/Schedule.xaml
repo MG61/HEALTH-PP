@@ -30,9 +30,10 @@
 
         </Border>
         <DataGrid x:Name="data" FontWeight="Bold" FontSize="15" VerticalContentAlignment="Center" Margin="110,44,110,168" BorderThickness="2"/>
-        <Button Content="Выход"  Margin="22,589,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
-        <Button Content="Сгенерировать расписание"  Margin="566,589,0,0"   Click="FillDataGrid1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
-        <Button Content="Экспорт"  Margin="387,589,0,0"   Click="export" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
-        <ComboBox Margin="889,587,10,23" x:Name="group"/>
+        <Button Content="Выход"  Margin="367,584,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
+        <Button Content="Экспорт"  Margin="367,525,0,0"   Click="export" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
+        <Button Content="Сгенерировать расписание"  Margin="575,525,0,0"   Click="dob_table" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
+        <Button Content="Удалить данные"  Margin="575,584,0,0"   Click="delete_table" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
+
     </Grid>
 </Window>

@@ -1,0 +1,36 @@
+﻿<Window x:Class="PP8_February.Admin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PP8_February"
+        mc:Ignorable="d"
+        Title="Admin" Height="650" Width="1100" AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary Source="InterestButton.xaml" />
+    </Window.Resources>
+
+    <Grid>
+        <Border Name="BorderLog" CornerRadius="10" Visibility="Visible" BorderThickness="0,7,0,0" Padding="1,0,0,0" Margin="0,0,-0.4,0">
+            <!--Для закругления краёв-->
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#243748" Offset="0.0"/>
+                    <!--<GradientStop Color="#bb77ed" Offset="0.5"/>-->
+                    <GradientStop Color="#557c93" Offset="1.0"/>
+
+                </LinearGradientBrush>
+                <!--Градиент-->
+            </Border.Background>
+        </Border>
+        <DataGrid x:Name="data" FontWeight="Bold" FontSize="15" VerticalContentAlignment="Center" Margin="432,10,9.6,10"  BorderBrush="Black" BorderThickness="2" />
+        <Button Content="Добавить" HorizontalAlignment="Left" Margin="35,531,0,0" VerticalAlignment="Top" Width="160" Click="DOB_sotr_Login" Height="38" FontFamily="Britannic Bold"/>
+        <Button Content="Изменить" HorizontalAlignment="Left" Margin="35,584,0,0" VerticalAlignment="Top" Width="160" Click="UPDATE_sotr_Login" Height="38" FontFamily="Britannic Bold"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="237,531,0,0" VerticalAlignment="Top" Width="160" Click="DELETE_sotr_Login" Height="38" FontFamily="Britannic Bold"/>
+        <Button Content="Выход"  Margin="237,584,0,0"   Click="EXIT_2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="160" Height="38" RenderTransformOrigin="0.5,0.5" FontFamily="Britannic Bold"/>
+        <TextBox Name="log" GotFocus="got1" PreviewTextInput="log_PreviewTextInput" LostFocus="los1" HorizontalAlignment="Left" Height="38" Margin="35,152,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Width="362" TextAlignment="Center" Background="White" BorderBrush="White" Foreground="#557c93" FontSize="15" FontFamily="Britannic Bold"/>
+        <TextBox Name="pass" GotFocus="got2" PreviewTextInput ="pass_PreviewTextInput"  LostFocus="los2" HorizontalAlignment="Left" Height="38" Margin="35,233,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Width="362" TextAlignment="Center" Background="White" BorderBrush="White" Foreground="#557c93" FontSize="15" FontFamily="Britannic Bold"/>
+    </Grid>
+</Window>

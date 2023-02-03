@@ -32,7 +32,7 @@
         <Setter Property="Background" Value="White" />
         <Setter Property="BorderBrush" Value="White" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Foreground" Value="SkyBlue" />
+        <Setter Property="Foreground" Value="#243748" />
         <Setter Property="Padding" Value="5,4,5,4" />
         <Setter Property="SelectionBrush" Value="#243748" />
         <Setter Property="Template">
